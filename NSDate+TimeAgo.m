@@ -94,7 +94,7 @@ NSLocalizedStringFromTableInBundle(key, @"NSDateTimeAgo", [NSBundle bundleWithPa
     }
     else if(deltaSeconds < 120)
     {
-        return NSDateTimeAgoLocalizedStrings(@"About a minute remaining");
+        return NSDateTimeAgoLocalizedStrings(@"A minute remaining");
     }
     else if (deltaMinutes < 60)
     {
