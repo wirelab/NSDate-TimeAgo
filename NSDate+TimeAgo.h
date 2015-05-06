@@ -13,5 +13,7 @@
 // when more precision is needed (= less than 6 hours ago) it returns the same output as dateTimeAgo
 - (NSString *)dateTimeUntilNow;
 
+- (NSString *) timeUntil;
+
 @end
 

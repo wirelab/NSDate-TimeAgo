@@ -124,6 +124,72 @@ NSLocalizedStringFromTableInBundle(key, @"NSDateTimeAgo", [NSBundle bundleWithPa
     return [self stringFromFormat:@"%%d %@years ago" withValue:minutes];
 }
 
+- (NSString *)timeUntil
+{
+    NSDate *now = [NSDate date];
+    double deltaSeconds = fabs([self timeIntervalSinceDate:now]);
+    double deltaMinutes = deltaSeconds / 60.0f;
+    
+    int minutes;
+    
+    if(deltaSeconds < 60)
+    {
+        return [self stringFromFormat:@"%%d %@seconds remaining" withValue:deltaSeconds];
+    }
+    else if(deltaSeconds < 120)
+    {
+        return NSDateTimeAgoLocalizedStrings(@"A minute remaining");
+    }
+    else if (deltaMinutes < 60)
+    {
+        return [self stringFromFormat:@"%%d %@minutes remaining" withValue:deltaMinutes];
+    }
+    else if (deltaMinutes < 120)
+    {
+        return NSDateTimeAgoLocalizedStrings(@"An hour remaining");
+    }
+    else if (deltaMinutes < (24 * 60))
+    {
+        minutes = (int)floor(deltaMinutes/60);
+        return [self stringFromFormat:@"%%d %@hours remaining" withValue:minutes];
+    }
+    else if (deltaMinutes < (24 * 60 * 2))
+    {
+        return NSDateTimeAgoLocalizedStrings(@"Tomorrow");
+    }
+    else if (deltaMinutes < (24 * 60 * 7))
+    {
+        minutes = (int)floor(deltaMinutes/(60 * 24));
+        return [self stringFromFormat:@"%%d %@days remaining" withValue:minutes];
+    }
+    else if (deltaMinutes < (24 * 60 * 14))
+    {
+        return NSDateTimeAgoLocalizedStrings(@"Next week");
+    }
+    else if (deltaMinutes < (24 * 60 * 31))
+    {
+        minutes = (int)floor(deltaMinutes/(60 * 24 * 7));
+        return [self stringFromFormat:@"%%d %@weeks remaining" withValue:minutes];
+    }
+    else if (deltaMinutes < (24 * 60 * 61))
+    {
+        return NSDateTimeAgoLocalizedStrings(@"Next month");
+    }
+    else if (deltaMinutes < (24 * 60 * 365.25))
+    {
+        minutes = (int)floor(deltaMinutes/(60 * 24 * 30));
+        return [self stringFromFormat:@"%%d %@months remaining" withValue:minutes];
+    }
+    else if (deltaMinutes < (24 * 60 * 731))
+    {
+        return NSDateTimeAgoLocalizedStrings(@"Next year");
+    }
+    
+    minutes = (int)floor(deltaMinutes/(60 * 24 * 365));
+    return [self stringFromFormat:@"%%d %@years remaining" withValue:minutes];
+}
+
+
 // Similar to timeAgo, but only returns "
 - (NSString *)dateTimeAgo
 {
